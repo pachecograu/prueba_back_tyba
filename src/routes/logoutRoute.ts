@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     try {
         let response:any = await logout(req);
         if (response && !response.code) {
-            res.send(response);
+            res.json(response);
         }else{
             throw response;
         }
