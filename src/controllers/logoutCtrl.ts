@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 export const logout = async (req: any) => {
   try {
     let token = req.headers['x-access-token'];
-    if (req.body.username && token) {
+    if (token) {
       let user = await findLogin(token);
       if (user[2] == token) {
         await serviceRgt(user, token);
