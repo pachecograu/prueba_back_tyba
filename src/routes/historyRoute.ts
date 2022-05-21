@@ -1,13 +1,13 @@
 import Express from "express";
-import { authentication } from '../controllers/authCtrl';
+import { findTrans } from '../controllers/historyCtrl';
 import exepciones from "../config/exepciones";
 
 const router = Express.Router();
 
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        let response:any = await authentication(req);
-        if (response && !response.code) {
+        let response:any = await findTrans(req);
+        if (response && response.code === 200) {
             res.send(response);
         }else{
             throw response;

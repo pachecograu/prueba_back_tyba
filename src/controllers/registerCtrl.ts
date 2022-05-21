@@ -6,7 +6,6 @@ createTableUser();
 
 export const register = async (body: any) =>{
     try {
-        console.log(body)
         if (body.username && body.password && body.name) {
             let user = await findUser(body);
             if (user && user[1] === body.username) {
@@ -16,11 +15,7 @@ export const register = async (body: any) =>{
                 }
             }
             let res = await insertUser(body);
-            await insertHis({
-                user: '',
-                transaction: 'registro de usuario',
-                date: new Date()
-            });
+            await serviceRgt();
             return {
                 code: 200,
                 descp: 'Usuario registrado correctamente',
@@ -36,3 +31,11 @@ export const register = async (body: any) =>{
         return error
     }
 }
+
+async function serviceRgt() {
+    await insertHis({
+        user: '',
+        transaction: 'registro de usuario',
+        date: new Date()
+    });
+  }

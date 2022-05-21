@@ -1,18 +1,18 @@
-import { insert as insertHis } from "../models/historyModel";
-import { insert as insertLogin, find as findLogin, update as updateLogin } from "../models/loginModel";
+import { findAll as findAllHis, insert as insertHis } from "../models/historyModel";
+import { find as findLogin } from "../models/loginModel";
 const jwt = require('jsonwebtoken')
 
-export const logout = async (req: any) => {
+export const findTrans = async (req: any) => {
   try {
     let token = req.headers['x-access-token'];
-    if (req.body.username && token) {
+    if (token) {
       let user = await findLogin(token);
       if (user[2] == token) {
         await serviceRgt(user, token);
-        await updateLogin(token);
+        let result = await findAllHis();
         return {
           code: 200,
-          descp: 'Usuario cerro sesion correctamente'
+          data: result
         };
       } else {
         throw {
@@ -34,7 +34,7 @@ export const logout = async (req: any) => {
 async function serviceRgt(user: any, token: string) {
   await insertHis({
     user: user[1],
-    transaction: 'Cerro sesion',
+    transaction: 'listar tansacciones',
     date: new Date()
   });
 }

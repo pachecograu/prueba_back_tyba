@@ -1,12 +1,11 @@
 import Express from "express";
-import { auth } from '../controllers/userCtrl';
+import { getApi } from '../controllers/userCtrl';
 import exepciones from "../config/exepciones";
 
 const router = Express.Router();
 
 router.get('/', async (req, res) => {
-    let response = await auth(req.query);
-    console.log(response);
+    let response = await getApi(req.query);
     res.send(response);
 });
 

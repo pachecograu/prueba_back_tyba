@@ -25,16 +25,12 @@ export const createTable = async () => {
         CONSTRAINT login_pkey PRIMARY KEY (id)
     )`, (err: any, res: any) => {
         if (err) throw err
-        console.log(res)
         //client.end()
     })
 }
 
 export const insert = async (login: Login) => {
-    console.log(login);
     try {
-        console.log(`INSERT INTO test.login("user", token, date)
-        VALUES ('${login.user}', '${login.token}', '${login.date.getTime()}');`)
         const result = await client.query({
             text: `INSERT INTO test.login("user", token, date)
             VALUES ('${login.user}', '${login.token}', '${fortmatDate(login.date)}');`,
@@ -45,13 +41,12 @@ export const insert = async (login: Login) => {
     }
 }
 
-export const update = async (user: User) => {
+export const update = async (token: string) => {
     try {
         const result = await client.query({
-            rowMode: 'array',
             text: `UPDATE test.login
         SET state=false
-        WHERE id = ${user.id};`,
+        WHERE token = '${token}';`,
         });
         return result.rowCount;
     } catch (error) {
@@ -65,7 +60,6 @@ export const find = async (token: string) => {
             rowMode: 'array',
             text: `SELECT * from test.login WHERE token = '${token}';`,
         });
-        console.log(result.rows[0]);
         //await client.end();
         return result.rows[0];
     } catch (error) {

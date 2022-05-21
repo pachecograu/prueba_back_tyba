@@ -17,13 +17,11 @@ export const createTable = async () => {
         CONSTRAINT users_pkey PRIMARY KEY (id)
     )`, (err: any, res: any) => {
         if (err) throw err
-        console.log(res)
         //client.end()
     })
 }
 
 export const insert = async (user: User) => {
-    console.log(user);
     try {
         const result = await client.query({
             text: `INSERT INTO test.users(username, password, name)
@@ -40,7 +38,6 @@ export const find = async (user: User) => {
         rowMode: 'array',
         text: `SELECT * from test.users WHERE username = '${user.username}';`,
     });
-    console.log(result.rows[0]);
     //await client.end();
     return result.rows[0];
 }

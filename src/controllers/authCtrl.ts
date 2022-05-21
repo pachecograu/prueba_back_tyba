@@ -7,10 +7,8 @@ const jwt = require('jsonwebtoken')
 
 export const authentication = async (req: any) => {
   try {
-    console.log(req.body)
     if (req.body.username && req.body.password) {
       let user = await findUser(req.body);
-      console.log('authenticate', user[2], md5(req.body.password));
       if (user[2] == md5(req.body.password)) {
         var token = jwt.sign({
           id: user[0]

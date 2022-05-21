@@ -16,13 +16,11 @@ export const createTable = async () => {
         CONSTRAINT history_pkey PRIMARY KEY (id)
     )`, (err: any, res: any) => {
         if (err) throw err
-        console.log(res)
         //client.end()
     })
 }
 
 export const insert = async (history: Hystory) => {
-    console.log(history);
     try {
         let date = fortmatDate(history.date);
         const result = await client.query({
@@ -39,9 +37,8 @@ export const findAll = async () => {
         rowMode: 'array',
         text: `SELECT * from test.history;`,
     });
-    console.log(result.rows[0]);
     //await client.end();
-    return result.rows[0];
+    return result.rows;
 }
 
 function fortmatDate(date: Date) {
